@@ -25,9 +25,9 @@ def batchify(data, bsz, args):
 
 def get_batch(source, i, args, seq_len=None, evaluation=False):
     seq_len = min(seq_len if seq_len else args.bptt, len(source) - 1 - i)
-    data = Variable(source[i:i+seq_len], volatile=evaluation)
+    data = source[i:i+seq_len]
     # target = Variable(source[i+1:i+1+seq_len].view(-1))
-    target = Variable(source[i+1:i+1+seq_len])
+    target = source[i+1:i+1+seq_len].view(-1)
     return data, target
 
 def create_exp_dir(path, scripts_to_save=None):
