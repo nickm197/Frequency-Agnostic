@@ -6,7 +6,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.autograd import Variable
+#from torch.autograd import Variable
 
 import gc
 
@@ -184,7 +184,8 @@ if args.adv:
     adv_criterion = nn.CrossEntropyLoss(weight=torch.Tensor([rate, 1 - rate]).cuda())
     adv_hidden = nn.Linear(args.emsize, 2).cuda()
     adv_targets = torch.LongTensor(np.array([0] * args.adv_bias + [1] * (ntokens - args.adv_bias))).cuda()
-    adv_targets = Variable(adv_targets)
+    #adv_targets = Variable(adv_targets)
+    adv_targets.requires_grad = True
     adv_hidden.weight.data.uniform_(-0.1, 0.1)
 ###############################################################################
 # Training code
@@ -332,8 +333,13 @@ try:
         if 't0' in optimizer.param_groups[0]:
             tmp = {}
             for prm in model.parameters():
-                tmp[prm] = prm.data.clone()
-                prm.data = optimizer.state[prm]['ax'].clone()
+                if prm in optimizer.state.keys():
+                    # tmp[prm] = prm.data.clone()
+                    tmp[prm] = prm.data.detach()
+                    # tmp[prm].copy_(prm.data)
+                    # if 'ax' in optimizer.state[prm]:  # added this line because of error: File "main.py", line 268, in <module> prm.data = optimizer.state[prm]['ax'].clone() KeyError: 'ax'
+                    # prm.data = optimizer.state[prm]['ax'].clone()
+                    prm.data = optimizer.state[prm]['ax'].detach()
 
             val_loss2 = evaluate(val_data)
             logging('-' * 89)
@@ -348,7 +354,10 @@ try:
                 stored_loss = val_loss2
 
             for prm in model.parameters():
-                prm.data = tmp[prm].clone()
+                if prm in tmp.keys():
+                    # prm.data = tmp[prm].clone()
+                    prm.data = tmp[prm].detach()
+                    prm.requires_grad = True
             best_val_loss.append(val_loss2)
         else:
             val_loss = evaluate(val_data, eval_batch_size)
