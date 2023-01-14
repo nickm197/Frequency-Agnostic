@@ -166,7 +166,7 @@ def evaluate(data_source, batch_size=10):
 
         total_loss += len(data) * loss
         hidden = repackage_hidden(hidden)
-    return total_loss[0] / len(data_source)
+    return total_loss.item() / len(data_source)
 
 def train():
     assert args.batch_size % args.small_batch_size == 0, 'batch_size must be divisible by small_batch_size'
