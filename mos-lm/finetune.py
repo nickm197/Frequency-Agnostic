@@ -6,7 +6,7 @@ import numpy as np
 np.random.seed(331)
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
+#from torch.autograd import Variable
 
 import data
 import model
@@ -266,8 +266,11 @@ try:
         if 't0' in optimizer.param_groups[0]:
             tmp = {}
             for prm in model.parameters():
-                tmp[prm] = prm.data.clone()
-                prm.data = optimizer.state[prm]['ax'].clone()
+                if prm in optimizer.state.keys():
+                    # tmp[prm] = prm.data.clone()
+                    tmp[prm] = prm.data.detach()
+                    # prm.data = optimizer.state[prm]['ax'].clone()
+                    prm.data = optimizer.state[prm]['ax'].detach()
 
             val_loss2 = evaluate(val_data)
             logging('-' * 89)
@@ -282,7 +285,10 @@ try:
                 stored_loss = val_loss2
 
             for prm in model.parameters():
-                prm.data = tmp[prm].clone()
+                if prm in tmp.keys():
+                    # prm.data = tmp[prm].clone()
+                    prm.data = tmp[prm].detach()
+                    prm.requires_grad = True
 
         if (len(best_val_loss)>args.nonmono and val_loss2 > min(best_val_loss[:-args.nonmono])):
             logging('Done!')
