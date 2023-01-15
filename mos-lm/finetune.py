@@ -51,8 +51,8 @@ parser.add_argument('--tied', action='store_false',
                     help='tie the word embedding and softmax weights')
 parser.add_argument('--seed', type=int, default=1111,
                     help='random seed')
-parser.add_argument('--nonmono', type=int, default=5,
-                    help='random seed')
+parser.add_argument('--nonmono', type=int, default=2,
+                    help='number of epochs when the loss does not increase')
 parser.add_argument('--cuda', action='store_false',
                     help='use CUDA')
 parser.add_argument('--log-interval', type=int, default=200, metavar='N',
@@ -251,6 +251,15 @@ def train():
 # Loop over epochs.
 lr = args.lr
 stored_loss = evaluate(val_data)
+logging('-' * 89)
+logging('| Before training, valid loss {:5.2f} | '
+        'valid ppl {:8.2f}'.format(val_loss2, math.exp(val_loss2)))
+logging('-' * 89)
+test_loss = evaluate(test_data, test_batch_size)
+logging('=' * 89)
+logging('| Before training, test loss {:5.2f} | test ppl {:8.2f}'.format(
+    test_loss, math.exp(test_loss)))
+logging('=' * 89)
 best_val_loss = []
 # At any point you can hit Ctrl + C to break out of training early.
 try:
@@ -291,8 +300,8 @@ try:
                     prm.requires_grad = True
 
         if (len(best_val_loss)>args.nonmono and val_loss2 > min(best_val_loss[:-args.nonmono])):
-            logging('Done!')
-            break
+            #logging('Done!')
+            #break
             optimizer = torch.optim.ASGD(model.parameters(), lr=args.lr, t0=0, lambd=0., weight_decay=args.wdecay)
             #optimizer.param_groups[0]['lr'] /= 2.
         best_val_loss.append(val_loss2)
