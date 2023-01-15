@@ -303,7 +303,7 @@ try:
             #logging('Done!')
             #break
             optimizer = torch.optim.ASGD(model.parameters(), lr=args.lr, t0=0, lambd=0., weight_decay=args.wdecay)
-            #optimizer.param_groups[0]['lr'] /= 2.
+            optimizer.param_groups[0]['lr'] /= 2.
         best_val_loss.append(val_loss2)
 
 except KeyboardInterrupt:
