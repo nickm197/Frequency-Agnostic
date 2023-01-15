@@ -319,12 +319,12 @@ finetune = False
 try:
     if args.continue_train:
         optimizer_state = torch.load(os.path.join(args.save, 'optimizer.pt'))
+        optimizer.load_state_dict(optimizer_state)
         if 't0' in optimizer_state['param_groups'][0]:
             optimizer = torch.optim.ASGD(model.parameters(), lr=args.lr, t0=0, lambd=0., weight_decay=args.wdecay)
             optimizer.param_groups[0]['lr'] = args.lr
         else:
             optimizer = torch.optim.SGD(model.parameters(), lr=args.lr, weight_decay=args.wdecay)
-        optimizer.load_state_dict(optimizer_state)
     else:
         optimizer = torch.optim.SGD(model.parameters(), lr=args.lr, weight_decay=args.wdecay)
 
