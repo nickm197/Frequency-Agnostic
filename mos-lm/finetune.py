@@ -253,7 +253,7 @@ lr = args.lr
 stored_loss = evaluate(val_data)
 logging('-' * 89)
 logging('| Before training, valid loss {:5.2f} | '
-        'valid ppl {:8.2f}'.format(val_loss2, math.exp(val_loss2)))
+        'valid ppl {:8.2f}'.format(stored_loss, math.exp(stored_loss)))
 logging('-' * 89)
 test_loss = evaluate(test_data, test_batch_size)
 logging('=' * 89)
