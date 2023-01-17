@@ -4,6 +4,7 @@ import os, sys
 import math
 import numpy as np
 np.random.seed(331)
+np.random.seed(331)
 import torch
 import torch.nn as nn
 #from torch.autograd import Variable
@@ -51,7 +52,7 @@ parser.add_argument('--tied', action='store_false',
                     help='tie the word embedding and softmax weights')
 parser.add_argument('--seed', type=int, default=1111,
                     help='random seed')
-parser.add_argument('--nonmono', type=int, default=2,
+parser.add_argument('--nonmono', type=int, default=5,
                     help='number of epochs when the loss does not increase')
 parser.add_argument('--cuda', action='store_false',
                     help='use CUDA')
