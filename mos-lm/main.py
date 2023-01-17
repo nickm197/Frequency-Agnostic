@@ -332,15 +332,14 @@ try:
         epoch_start_time = time.time()
         train()
         if 't0' in optimizer.param_groups[0]:
-            tmp = {}
-            for prm in model.parameters():
-                if prm in optimizer.state.keys():
-                    tmp[prm] = prm.data.clone()
-                    #tmp[prm] = prm.data.detach()
-                    # tmp[prm].copy_(prm.data)
-                    # if 'ax' in optimizer.state[prm]:  # added this line because of error: File "main.py", line 268, in <module> prm.data = optimizer.state[prm]['ax'].clone() KeyError: 'ax'
-                    prm.data = optimizer.state[prm]['ax'].clone()
-                    #prm.data = optimizer.state[prm]['ax'].detach()
+            #tmp = {}
+            #for prm in model.parameters():
+            #    if prm in optimizer.state.keys():
+            #        #tmp[prm] = prm.data.clone()
+            #        tmp[prm] = prm.detach()
+            #        # tmp[prm].copy_(prm.data)
+            #        #prm.data = optimizer.state[prm]['ax'].clone()
+            #        prm = optimizer.state[prm]['ax'].detach()
 
             val_loss2 = evaluate(val_data)
             logging('-' * 89)
@@ -354,11 +353,11 @@ try:
                 logging('Saving Averaged!')
                 stored_loss = val_loss2
 
-            for prm in model.parameters():
-                if prm in tmp.keys():
-                    # prm.data = tmp[prm].clone()
-                    prm.data = tmp[prm].detach()
-                    prm.requires_grad = True
+            #for prm in model.parameters():
+            #    if prm in tmp.keys():
+            #        # prm.data = tmp[prm].clone()
+            #        prm = tmp[prm].detach()
+            #        prm.requires_grad = True
             best_val_loss.append(val_loss2)
         else:
             val_loss = evaluate(val_data, eval_batch_size)
