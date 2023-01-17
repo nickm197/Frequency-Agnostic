@@ -76,7 +76,7 @@ parser.add_argument('--max_seq_len_delta', type=int, default=40,
 parser.add_argument('--single_gpu', default=False, action='store_true',
                     help='use single GPU')
 
-parser.add_argument('--model-file', type=str,  default='',
+parser.add_argument('--model_file', type=str,  default='',
                     help='path to load the model from')
 
 parser.add_argument('--log-file', type=str,  default='',
@@ -152,7 +152,7 @@ test_data = batchify(corpus.test, test_batch_size, args)
 ###############################################################################
 
 ntokens = len(corpus.dictionary)
-model = torch.load(args.modelfile)
+model = torch.load(args.model_file)
 model.gaussian = args.gaussian;model.dropouti = args.dropouti
 
 if args.cuda:
