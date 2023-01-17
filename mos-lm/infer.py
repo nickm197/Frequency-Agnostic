@@ -155,13 +155,13 @@ ntokens = len(corpus.dictionary)
 model = torch.load(args.model_file)
 model.gaussian = args.gaussian;model.dropouti = args.dropouti
 
-if args.cuda:
-    if args.single_gpu:
-        parallel_model = model.cuda()
-    else:
-        parallel_model = nn.DataParallel(model, dim=1).cuda()
-else:
-    parallel_model = model
+#if args.cuda:
+#    if args.single_gpu:
+#        parallel_model = model.cuda()
+#    else:
+#        parallel_model = nn.DataParallel(model, dim=1).cuda()
+#else:
+parallel_model = model
 
 total_params = sum(x.data.nelement() for x in model.parameters())
 logging('Args: {}'.format(args))
