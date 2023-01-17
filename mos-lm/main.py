@@ -340,7 +340,7 @@ try:
                     # tmp[prm].copy_(prm.data)
                     # if 'ax' in optimizer.state[prm]:  # added this line because of error: File "main.py", line 268, in <module> prm.data = optimizer.state[prm]['ax'].clone() KeyError: 'ax'
                     prm.data = optimizer.state[prm]['ax'].clone()
-                    # prm.data = optimizer.state[prm]['ax'].detach()
+                    #prm.data = optimizer.state[prm]['ax'].detach()
 
             val_loss2 = evaluate(val_data)
             logging('-' * 89)
