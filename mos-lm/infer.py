@@ -154,16 +154,19 @@ test_data = batchify(corpus.test, test_batch_size, args)
 ###############################################################################
 
 ntokens = len(corpus.dictionary)
-model = torch.load(args.model_file)
+model = model.RNNModel(args.model, ntokens, args.emsize, args.nhid, args.nhidlast, args.nlayers,
+                       args.dropout, args.dropouth, args.dropouti, args.dropoute, args.wdrop,
+                       args.tied, args.dropoutl, args.n_experts, args.epsilon, args.gaussian)
+model.load_state_dict(torch.load(args.model_file))
 model.gaussian = args.gaussian;model.dropouti = args.dropouti
 
-#if args.cuda:
-#    if args.single_gpu:
-#        parallel_model = model.cuda()
-#    else:
-#        parallel_model = nn.DataParallel(model, dim=1).cuda()
-#else:
-parallel_model = model
+if args.cuda:
+    if args.single_gpu:
+        parallel_model = model.cuda()
+    else:
+        parallel_model = nn.DataParallel(model, dim=1).cuda()
+else:
+    parallel_model = model
 
 total_params = sum(x.data.nelement() for x in model.parameters())
 logging('Args: {}'.format(args))
