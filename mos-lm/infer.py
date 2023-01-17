@@ -78,6 +78,8 @@ parser.add_argument('--single_gpu', default=False, action='store_true',
 
 parser.add_argument('--model_file', type=str,  default='',
                     help='path to load the model from')
+parser.add_argument('--save', type=str,  default='EXP',
+                    help='path to save the log')
 
 parser.add_argument('--log-file', type=str,  default='',
                     help='path to save the log')
