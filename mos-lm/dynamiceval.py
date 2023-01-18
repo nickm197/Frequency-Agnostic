@@ -146,14 +146,15 @@ def evaluate():
             last = True
 
         data, targets = get_batch(eval_data, i, args)
+        targets = targets.view(-1)
 
         hidden = repackage_hidden(hidden)
 
         model.zero_grad()
 
-        #assumes model has atleast 2 returns, and first is output and second is hidden
+        #assumes model has at least 2 returns, and first is output and second is hidden
         log_prob, hidden = model(data, hidden)
-        loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), targets)
+        loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), targets).data
 
         #compute gradient on sequence segment loss
         loss.backward()
