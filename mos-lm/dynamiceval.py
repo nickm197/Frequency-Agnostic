@@ -120,18 +120,21 @@ def evaluate():
     #otherwise scaled decay rates can be greater than 1
     #would cause decay updates to overshoot
     for param in model.parameters():
-        if args.cuda:
-            decratenp = param.decrate.cpu().numpy()
-            ind = np.nonzero(decratenp>(1/lamb))
-            decratenp[ind] = (1/lamb)
-            param.decrate = torch.from_numpy(decratenp).type(torch.cuda.FloatTensor)
-            param.data0 = 1*param.data
-        else:
-            decratenp = param.decrate.numpy()
-            ind = np.nonzero(decratenp>(1/lamb))
-            decratenp[ind] = (1/lamb)
-            param.decrate = torch.from_numpy(decratenp).type(torch.FloatTensor)
-            param.data0 = 1*param.data
+        try:
+            if args.cuda:
+                decratenp = param.decrate.cpu().numpy()
+                ind = np.nonzero(decratenp>(1/lamb))
+                decratenp[ind] = (1/lamb)
+                param.decrate = torch.from_numpy(decratenp).type(torch.cuda.FloatTensor)
+                param.data0 = 1*param.data
+            else:
+                decratenp = param.decrate.numpy()
+                ind = np.nonzero(decratenp>(1/lamb))
+                decratenp[ind] = (1/lamb)
+                param.decrate = torch.from_numpy(decratenp).type(torch.FloatTensor)
+                param.data0 = 1*param.data
+        except:
+            pass
 
     total_loss = 0
 
@@ -168,8 +171,11 @@ def evaluate():
 
         #update rule
         for param in model.parameters():
-            dW = lamb*param.decrate*(param.data0-param.data)-lr*param.grad.data/(param.MS+epsilon)
-            param.data+=dW
+            try:
+                dW = lamb*param.decrate*(param.data0-param.data)-lr*param.grad.data/(param.MS+epsilon)
+                param.data+=dW
+            except:
+                pass
 
         #seq_len/seq_len0 will be 1 except for last sequence
         #for last sequence, we downweight if sequence is shorter
