@@ -68,8 +68,6 @@ def gradstat():
 
     for param in model.parameters():
         param.MS = 0. * param.data
-        print(param.MS)
-
     while i < train_data.size(0) - 1 - 1:
         seq_len = args.bptt
         model.use_dropout = False# model.eval()
@@ -87,8 +85,6 @@ def gradstat():
         for param in model.parameters():
             try:
                 param.MS = param.MS + param.grad.data*param.grad.data
-            except:
-                print(param.MS)
 
         total_loss += loss.data
 
