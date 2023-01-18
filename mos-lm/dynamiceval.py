@@ -72,6 +72,7 @@ def gradstat():
     while i < train_data.size(0) - 1 - 1:
         seq_len = args.bptt
         model.use_dropout = False# model.eval()
+        model.zero_grad()
 
         data, targets = get_batch(train_data, i, args)
         targets = targets.view(-1)
