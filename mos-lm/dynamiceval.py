@@ -189,14 +189,14 @@ with open(model_name, 'rb') as f:
 ntokens = len(corpus.dictionary)
 criterion = nn.CrossEntropyLoss()
 
-val_data = batchify(corpus.valid, eval_batch_size)
-test_data = batchify(corpus.test, test_batch_size)
+val_data = batchify(corpus.valid, eval_batch_size, args)
+test_data = batchify(corpus.test, test_batch_size, args)
 
 if args.val== True:
     eval_data= val_data
 else:
     eval_data=test_data
-train_data = batchify(corpus.train, args.batch_size)
+train_data = batchify(corpus.train, args.batch_size, args)
 
 print('collecting gradient statistics')
 #collect gradient statistics on training data
