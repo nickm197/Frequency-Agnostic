@@ -68,6 +68,7 @@ def gradstat():
 
     for param in model.parameters():
         param.MS = 0. * param.data
+        print(param.MS)
 
     while i < train_data.size(0) - 1 - 1:
         seq_len = args.bptt
