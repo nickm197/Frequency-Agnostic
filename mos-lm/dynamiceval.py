@@ -222,11 +222,11 @@ eval_data= val_data
 loss = evaluate()
 print('-' * 89)
 print('| Valid loss {:5.2f} | '
-        'valid ppl {:8.2f}'.format(loss, math.exp(loss)))
+        'valid ppl {:8.2f}'.format(loss, math.exp(loss.item())))
 print('-' * 89)
 eval_data=test_data
 loss = evaluate()
 print('=' * 89)
 print('| Test loss {:5.2f} | test ppl {:8.2f}'.format(
-    test_loss, math.exp(test_loss)))
+    loss, math.exp(loss.item())))
 print('=' * 89)
