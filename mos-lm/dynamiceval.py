@@ -80,7 +80,7 @@ def gradstat():
 
         #assumes model has atleast 2 returns, and first is output and second is hidden
         log_prob, hidden = model(data, hidden)
-        loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), targets).data
+        loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), targets)
 
         loss.backward()
 
