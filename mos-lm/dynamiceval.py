@@ -72,7 +72,6 @@ def gradstat():
     while i < train_data.size(0) - 1 - 1:
         seq_len = args.bptt
         model.use_dropout = False# model.eval()
-        model.zero_grad()
 
         data, targets = get_batch(train_data, i, args)
         targets = targets.view(-1)
@@ -203,8 +202,9 @@ train_data = batchify(corpus.train, args.batch_size, args)
 
 print('collecting gradient statistics')
 #collect gradient statistics on training data
+model.train()
 gradstat()
-
+model.eval()
 #change batch size to 1 for dynamic eval
 args.batch_size=1
 print('running dynamic evaluation')
