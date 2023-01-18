@@ -85,7 +85,8 @@ def gradstat():
         for param in model.parameters():
             try:
                 param.MS = param.MS + param.grad.data*param.grad.data
-
+            except:
+                pass
         total_loss += loss.data
 
         batch += 1
