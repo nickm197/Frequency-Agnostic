@@ -164,7 +164,7 @@ def evaluate():
 
         #assumes model has at least 2 returns, and first is output and second is hidden
         log_prob, hidden = model(data, hidden)
-        loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), targets).data
+        loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), targets)
 
         #compute gradient on sequence segment loss
         loss.backward()
@@ -216,7 +216,7 @@ print('collecting gradient statistics')
 #collect gradient statistics on training data
 model.train()
 gradstat()
-#model.eval()
+model.eval()
 #change batch size to 1 for dynamic eval
 args.batch_size=1
 print('running dynamic evaluation')
