@@ -220,13 +220,13 @@ print('running dynamic evaluation')
 
 eval_data= val_data
 loss = evaluate()
-logging('-' * 89)
-logging('| Valid loss {:5.2f} | '
+print('-' * 89)
+print('| Valid loss {:5.2f} | '
         'valid ppl {:8.2f}'.format(loss, math.exp(loss)))
-logging('-' * 89)
+print('-' * 89)
 eval_data=test_data
 loss = evaluate()
-logging('=' * 89)
-logging('| Test loss {:5.2f} | test ppl {:8.2f}'.format(
+print('=' * 89)
+print('| Test loss {:5.2f} | test ppl {:8.2f}'.format(
     test_loss, math.exp(test_loss)))
-logging('=' * 89)
+print('=' * 89)
