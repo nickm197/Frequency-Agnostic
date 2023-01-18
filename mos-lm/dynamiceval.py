@@ -67,7 +67,7 @@ def gradstat():
     batch, i = 0, 0
 
     for param in model.parameters():
-        param.MS = 0*param.data
+        param.MS = 0. * param.data
 
     while i < train_data.size(0) - 1 - 1:
         seq_len = args.bptt
@@ -76,7 +76,6 @@ def gradstat():
         data, targets = get_batch(train_data, i, args)
         targets = targets.view(-1)
         hidden = repackage_hidden(hidden)
-        model.zero_grad()
 
         #assumes model has atleast 2 returns, and first is output and second is hidden
         log_prob, hidden = model(data, hidden)
@@ -85,7 +84,10 @@ def gradstat():
         loss.backward()
 
         for param in model.parameters():
-            param.MS = param.MS + param.grad.data*param.grad.data
+            try:
+                param.MS = param.MS + param.grad.data*param.grad.data
+            except:
+                print(param.MS)
 
         total_loss += loss.data
 
