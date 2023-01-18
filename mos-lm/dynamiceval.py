@@ -73,7 +73,7 @@ def gradstat():
         seq_len = args.bptt
         model.use_dropout = False# model.eval()
 
-        data, targets = get_batch(train_data, i)
+        data, targets = get_batch(train_data, i, args)
         hidden = repackage_hidden(hidden)
         model.zero_grad()
 
@@ -145,7 +145,7 @@ def evaluate():
             seq_len = eval_data.size(0)-i-1
             last = True
 
-        data, targets = get_batch(eval_data,i)
+        data, targets = get_batch(eval_data, i, args)
 
         hidden = repackage_hidden(hidden)
 
