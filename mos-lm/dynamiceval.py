@@ -216,7 +216,7 @@ print('collecting gradient statistics')
 #collect gradient statistics on training data
 model.train()
 gradstat()
-model.eval()
+#model.eval()
 #change batch size to 1 for dynamic eval
 args.batch_size=1
 print('running dynamic evaluation')
