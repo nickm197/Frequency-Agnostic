@@ -190,7 +190,7 @@ def evaluate():
     #total_loss += (1/seq_len0)*torch.log(torch.from_numpy(np.array([ntokens])).type(torch.cuda.FloatTensor))
     #batch+=(1/seq_len0)
 
-    perp = torch.exp(total_loss/batch)
+    perp = total_loss/batch
     if args.cuda:
         return perp.cpu().numpy()
     else:
@@ -222,11 +222,11 @@ eval_data= val_data
 loss = evaluate()
 print('-' * 89)
 print('| Valid loss {:5.2f} | '
-        'valid ppl {:8.2f}'.format(loss, math.exp(loss.item())))
+        'valid ppl {:8.2f}'.format(loss, math.exp(loss)))
 print('-' * 89)
 eval_data=test_data
 loss = evaluate()
 print('=' * 89)
 print('| Test loss {:5.2f} | test ppl {:8.2f}'.format(
-    loss, math.exp(loss.item())))
+    loss, math.exp(loss)))
 print('=' * 89)
