@@ -206,10 +206,6 @@ criterion = nn.CrossEntropyLoss()
 val_data = batchify(corpus.valid, eval_batch_size, args)
 test_data = batchify(corpus.test, test_batch_size, args)
 
-if args.val== True:
-    eval_data= val_data
-else:
-    eval_data=test_data
 train_data = batchify(corpus.train, args.batch_size, args)
 
 print('collecting gradient statistics')
@@ -221,5 +217,16 @@ gradstat()
 args.batch_size=1
 print('running dynamic evaluation')
 #apply dynamic evaluation
+
+eval_data= val_data
 loss = evaluate()
-print('perplexity loss: ' + str(loss))
+logging('-' * 89)
+logging('| Valid loss {:5.2f} | '
+        'valid ppl {:8.2f}'.format(loss, math.exp(loss)))
+logging('-' * 89)
+eval_data=test_data
+loss = evaluate()
+logging('=' * 89)
+logging('| Test loss {:5.2f} | test ppl {:8.2f}'.format(
+    test_loss, math.exp(test_loss)))
+logging('=' * 89)
