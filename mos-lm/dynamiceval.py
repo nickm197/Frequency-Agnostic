@@ -104,12 +104,15 @@ def gradstat():
                 param.MS = torch.sqrt(param.MS/batch)
             else:
                 param.MS = torch.sqrt(param.MS)
+            gsum+=torch.mean(param.MS)
         except:
             pass
-        gsum+=torch.mean(param.MS)
 
     for param in model.parameters():
-        param.decrate = param.MS/gsum
+        try:
+            param.decrate = param.MS/gsum
+        except:
+            pass
 
 def evaluate():
 
