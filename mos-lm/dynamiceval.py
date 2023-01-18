@@ -222,4 +222,4 @@ args.batch_size=1
 print('running dynamic evaluation')
 #apply dynamic evaluation
 loss = evaluate()
-print('perplexity loss: ' + str(loss[0]))
+print('perplexity loss: ' + str(loss))
