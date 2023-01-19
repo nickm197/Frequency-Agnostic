@@ -105,7 +105,7 @@ class TestSet(object):
                 tokens += len(words)
 
         # Tokenize file content
-        with open(path, 'r') as f:
+        with open(filename, 'r') as f:
             ids = torch.LongTensor(tokens)
             token = 0
             for line in f:
