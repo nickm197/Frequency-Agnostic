@@ -87,3 +87,34 @@ class Corpus(object):
                     token += 1
 
         return ids
+
+
+class TestSet(object):
+    def __init__(self, filename, dict):
+        self.dictionary = dict
+        self.text = self.tokenize_(filename)
+
+
+    def tokenize_(self, filename):
+        """Tokenizes a text file."""
+        assert os.path.exists(filename)
+        with open(filename, 'r') as f:
+            tokens = 0
+            for line in f:
+                words = line.split() + ['<eos>']
+                tokens += len(words)
+
+        # Tokenize file content
+        with open(path, 'r') as f:
+            ids = torch.LongTensor(tokens)
+            token = 0
+            for line in f:
+                words = line.split() + ['<eos>']
+                for word in words:
+                    try:
+                        ids[token] = self.dictionary.word2idx[word]
+                    except:
+                        ids[token] = self.dictionary.word2idx['<unk>']
+                    token += 1
+
+        return ids

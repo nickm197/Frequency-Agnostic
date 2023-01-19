@@ -34,6 +34,8 @@ parser.add_argument('--bptt', type=int, default=5,
                     help='sequence/truncation length')
 parser.add_argument('--max_batches', type=int, default=-1,
                     help='maximum number of training batches for gradient statistics')
+parser.add_argument('--text_file', type=str,
+                    help='filename of the text to test')
 # parser.add_argument('--n_experts', type=int, default=10, help='number of experts')
 
 
@@ -51,6 +53,7 @@ model_name=args.model
 print('loading')
 
 corpus = data.Corpus(args.data)
+text = data.TestSet(args.text_file, corpus.dictionary)
 eval_batch_size = 1
 test_batch_size = 1
 
@@ -205,8 +208,8 @@ criterion = nn.CrossEntropyLoss()
 
 val_data = batchify(corpus.valid, eval_batch_size, args)
 test_data = batchify(corpus.test, test_batch_size, args)
-
 train_data = batchify(corpus.train, args.batch_size, args)
+text_data = batchify(text.text, args.batch_size, args)
 
 print('collecting gradient statistics')
 #collect gradient statistics on training data
@@ -228,5 +231,11 @@ eval_data=test_data
 loss = evaluate()
 print('=' * 89)
 print('| Test loss {:5.2f} | test ppl {:8.2f}'.format(
+    loss, math.exp(loss)))
+print('=' * 89)
+eval_data=text_data
+loss = evaluate()
+print('=' * 89)
+print('| Text loss {:5.2f} | text ppl {:8.2f}'.format(
     loss, math.exp(loss)))
 print('=' * 89)
