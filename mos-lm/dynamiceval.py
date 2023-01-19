@@ -209,7 +209,7 @@ criterion = nn.CrossEntropyLoss()
 val_data = batchify(corpus.valid, eval_batch_size, args)
 test_data = batchify(corpus.test, test_batch_size, args)
 train_data = batchify(corpus.train, args.batch_size, args)
-text_data = batchify(text.text, args.batch_size, args)
+text_data = batchify(text.text, eval_batch_size, args)
 
 print('collecting gradient statistics')
 #collect gradient statistics on training data
