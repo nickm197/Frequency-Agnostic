@@ -171,7 +171,7 @@ def evaluate():
 
         #assumes model has at least 2 returns, and first is output and second is hidden
         log_prob, hidden = model(src, hidden)
-        print(log_prob.view(-1, log_prob.size(2)).size())
+        print(log_prob.view(log_prob.size(2)).size())
         #loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), torch.LongTensor([input[i+1]]).cuda())
 
         #tokens.append(corpus.dictionary.idx2word[data[0].tolist()[0]])
