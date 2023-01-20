@@ -155,13 +155,13 @@ def evaluate():
     indices = [src.item()]
     print('src', src, indices, corpus.dictionary.idx2word[src.item()])
     #while i < input.size(0) - 1:# - 1:
+    model.zero_grad()
     while i < 40:# - 1:
 
         #for d in data[0].tolist():
         #      print(d, corpus.dictionary.idx2word[d])
 
-        hidden = repackage_hidden(hidden)
-        model.zero_grad()
+        #hidden = repackage_hidden(hidden)
 
         src = torch.LongTensor([indices]).cuda()
 
