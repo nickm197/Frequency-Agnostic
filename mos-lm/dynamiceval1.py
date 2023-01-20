@@ -177,7 +177,7 @@ def evaluate():
         tokens.append(corpus.dictionary.idx2word[input[i+1].item()])
         lps.append(loss.data.item())
         #print(log_prob.size())
-        print(corpus.dictionary.idx2word[input[i+1]].item(), loss.data.item())
+        print(corpus.dictionary.idx2word[input[i+1].item()], loss.data.item())
 
         indices.append(input[i+1].item())
 
