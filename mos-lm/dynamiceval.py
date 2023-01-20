@@ -161,7 +161,8 @@ def evaluate():
         data, targets = get_batch(eval_data, i, args)
         targets = targets.view(-1)
 
-        print(data.item(), corpus.dictionary.idx2word[data.item()])
+        print(data)
+              #, corpus.dictionary.idx2word[data.item()])
 
 
         hidden = repackage_hidden(hidden)
