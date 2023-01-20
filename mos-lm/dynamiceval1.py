@@ -154,9 +154,9 @@ def evaluate():
     src = input[0]
     indices = [src.item()]
     print('src', src, indices, corpus.dictionary.idx2word[src.item()])
-    #while i < input.size(0) - 1:# - 1:
+    while i < input.size(0) - 1:# - 1:
     model.zero_grad()
-    while i < 40:# - 1:
+    #while i < 40:# - 1:
 
         #for d in data[0].tolist():
         #      print(d, corpus.dictionary.idx2word[d])
@@ -165,9 +165,7 @@ def evaluate():
 
         src = torch.LongTensor([[input[i].item()]]).cuda()
 
-        print('src', src, indices)
-
-        #hidden = model.init_hidden(i+1)
+        #print('src', src, indices)
 
         #assumes model has at least 2 returns, and first is output and second is hidden
         log_prob, hidden = model(src, hidden)
@@ -177,7 +175,7 @@ def evaluate():
         tokens.append(corpus.dictionary.idx2word[input[i+1].item()])
         lps.append(loss.data.item())
         #print(log_prob.size())
-        print(input[i+1].item(), corpus.dictionary.idx2word[input[i+1].item()], loss.data.item())
+        #print(input[i+1].item(), corpus.dictionary.idx2word[input[i+1].item()], loss.data.item())
 
         indices.append(input[i+1].item())
 
