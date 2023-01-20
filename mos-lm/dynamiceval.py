@@ -204,7 +204,7 @@ def evaluate():
     #makes very little difference, usually < 0.01 perplexity point
     #total_loss += (1/seq_len0)*torch.log(torch.from_numpy(np.array([ntokens])).type(torch.cuda.FloatTensor))
     #batch+=(1/seq_len0)
-    name = args.text_file.split('/')[1] + '.lps'
+    name = 'tokens.lps'
     print(name)
     with open(name, 'wb') as file:
         pickle.dump((tokens,  lps), file)
@@ -238,6 +238,7 @@ print('running dynamic evaluation')
 #apply dynamic evaluation
 
 eval_data= val_data
+args.bptt=eval_data.size()[0].item()
 loss = evaluate()
 print('-' * 89)
 print('| Valid loss {:5.2f} | '
