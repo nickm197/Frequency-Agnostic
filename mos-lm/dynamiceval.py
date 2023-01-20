@@ -161,8 +161,8 @@ def evaluate():
         data, targets = get_batch(eval_data, i, args)
         targets = targets.view(-1)
 
-        for d in data[0].tolist():
-              print(d, corpus.dictionary.idx2word[d])
+        #for d in data[0].tolist():
+        #      print(d, corpus.dictionary.idx2word[d])
 
         hidden = repackage_hidden(hidden)
 
@@ -171,6 +171,8 @@ def evaluate():
         #assumes model has at least 2 returns, and first is output and second is hidden
         log_prob, hidden = model(data, hidden)
         loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), targets)
+
+        print(corpus.dictionary.idx2word[data[0].tolist()[0]], loss.data)
 
         #compute gradient on sequence segment loss
         loss.backward()
