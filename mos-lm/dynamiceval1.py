@@ -176,7 +176,7 @@ def evaluate():
         #print(log_prob.size())
         print(corpus.dictionary.idx2word[input[i+1]], loss.data)
 
-        indices.append(input[i+1])
+        indices.append(input[i+1].item())
 
         #compute gradient on sequence segment loss
         loss.backward()
