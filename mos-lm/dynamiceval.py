@@ -205,7 +205,7 @@ def evaluate():
     #total_loss += (1/seq_len0)*torch.log(torch.from_numpy(np.array([ntokens])).type(torch.cuda.FloatTensor))
     #batch+=(1/seq_len0)
     name = args.text_file.split('/')[1]
-    with open(name + .lps, 'wb') as file:
+    with open(name + '.lps', 'wb') as file:
         pickle.dump((tokens,  lps), file)
 
     perp = total_loss/batch
