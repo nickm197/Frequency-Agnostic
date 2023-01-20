@@ -204,8 +204,9 @@ def evaluate():
     #makes very little difference, usually < 0.01 perplexity point
     #total_loss += (1/seq_len0)*torch.log(torch.from_numpy(np.array([ntokens])).type(torch.cuda.FloatTensor))
     #batch+=(1/seq_len0)
-    name = args.text_file.split('/')[1]
-    with open(name + '.lps', 'wb') as file:
+    name = args.text_file.split('/')[1] + '.lps'
+    print(name)
+    with open(name, 'wb') as file:
         pickle.dump((tokens,  lps), file)
 
     perp = total_loss/batch
