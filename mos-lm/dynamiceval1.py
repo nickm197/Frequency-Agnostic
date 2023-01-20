@@ -215,6 +215,7 @@ def evaluate():
     else:
         return perp.numpy()
 
+print(log_prob)
 #load model
 with open(model_name, 'rb') as f:
     model = torch.load(f)
