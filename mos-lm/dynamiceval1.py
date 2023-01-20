@@ -163,6 +163,10 @@ def evaluate():
         hidden = repackage_hidden(hidden)
         model.zero_grad()
 
+        src = torch.LongTensor([indices]).cuda()
+
+        print('src', src, indices)
+
         #assumes model has at least 2 returns, and first is output and second is hidden
         log_prob, hidden = model(src, hidden)
         loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), input[i+1])
@@ -171,6 +175,8 @@ def evaluate():
         #lps.append(loss.data.item())
         #print(log_prob.size())
         print(corpus.dictionary.idx2word[input[i+1]], loss.data)
+
+        indices.append(input[i+1])
 
         #compute gradient on sequence segment loss
         loss.backward()
