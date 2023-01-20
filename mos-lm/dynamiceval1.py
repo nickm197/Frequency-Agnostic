@@ -163,7 +163,7 @@ def evaluate():
 
         #hidden = repackage_hidden(hidden)
 
-        src = torch.LongTensor([input[i].item()]).cuda()
+        src = torch.LongTensor([[input[i].item()]]).cuda()
 
         print('src', src, indices)
 
