@@ -148,7 +148,7 @@ def evaluate():
     seq_len= args.bptt
     seq_len0 = seq_len
     #loops through data
-    while i < eval_data.size(0) - 1 - 1:
+    while i < eval_data.size(0) - 1:# - 1:
 
         model.use_dropout = False#model.eval()
         #gets last chunk of seqlence if seqlen doesn't divide full sequence cleanly
