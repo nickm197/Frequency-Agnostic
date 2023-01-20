@@ -167,6 +167,8 @@ def evaluate():
 
         print('src', src, indices)
 
+        hidden = model.init_hidden(i+1)
+
         #assumes model has at least 2 returns, and first is output and second is hidden
         log_prob, hidden = model(src, hidden)
         loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), torch.LongTensor([input[i+1]]).cuda())
