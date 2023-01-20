@@ -238,7 +238,7 @@ print('running dynamic evaluation')
 #apply dynamic evaluation
 
 eval_data= val_data
-args.bptt=eval_data.size()[0].item()
+args.bptt=eval_data.size()[0]
 loss = evaluate()
 print('-' * 89)
 print('| Valid loss {:5.2f} | '
