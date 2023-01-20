@@ -177,7 +177,7 @@ def evaluate():
         tokens.append(corpus.dictionary.idx2word[input[i+1].item()])
         lps.append(loss.data.item())
         #print(log_prob.size())
-        print(corpus.dictionary.idx2word[input[i+1].item()], loss.data.item())
+        print(input[i+1].item(), corpus.dictionary.idx2word[input[i+1].item()], loss.data.item())
 
         indices.append(input[i+1].item())
 
@@ -245,7 +245,7 @@ input = corpus.valid
 loss = evaluate()
 print('-' * 89)
 print('| Valid loss {:5.2f} | '
-        'valid ppl {:8.2f}'.format(loss, math.exp(loss)))
+        'valid ppl {:8.2f}'.format(loss, math.exp(-loss)))
 print('-' * 89)
 #eval_data=test_data
 #loss = evaluate()
