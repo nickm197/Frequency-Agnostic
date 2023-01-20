@@ -161,7 +161,7 @@ def evaluate():
         #for d in data[0].tolist():
         #      print(d, corpus.dictionary.idx2word[d])
 
-        #hidden = repackage_hidden(hidden)
+        hidden = repackage_hidden(hidden)
 
         src = torch.LongTensor([[input[i].item()]]).cuda()
 
