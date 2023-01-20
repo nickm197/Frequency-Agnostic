@@ -210,12 +210,12 @@ def evaluate():
         pickle.dump((tokens,  lps), file)
 
     perp = total_loss/batch
+    print(batch, log_prob)
     if args.cuda:
         return perp.cpu().numpy()
     else:
         return perp.numpy()
 
-print(log_prob)
 #load model
 with open(model_name, 'rb') as f:
     model = torch.load(f)
