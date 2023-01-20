@@ -191,10 +191,10 @@ def evaluate():
 
         #seq_len/seq_len0 will be 1 except for last sequence
         #for last sequence, we downweight if sequence is shorter
-        total_loss += (seq_len/seq_len0)*loss.data
-        batch += (seq_len/seq_len0)
+        total_loss += loss.data
+        batch += 1
 
-        i += seq_len
+        i += 1
 
     #since entropy of first token was never measured
     #can conservatively measure with uniform distribution
