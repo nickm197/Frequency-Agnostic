@@ -177,8 +177,9 @@ def evaluate():
         log_prob, hidden = model(data, hidden)
         loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), targets)
 
-        tokens.append(corpus.dictionary.idx2word[data[0].tolist()[0]])
-        lps.append(loss.data.item())
+        #tokens.append(corpus.dictionary.idx2word[data[0].tolist()[0]])
+        #lps.append(loss.data.item())
+        print(log_prob.size())
         #print(corpus.dictionary.idx2word[data[0].tolist()[0]], loss.data)
 
         #compute gradient on sequence segment loss
