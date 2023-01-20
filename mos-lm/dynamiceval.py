@@ -7,6 +7,7 @@ import torch
 import torch.nn as nn
 #from torch.autograd import Variable
 import data
+import pickle
 
 from utils import batchify, get_batch, repackage_hidden, create_exp_dir, save_checkpoint
 
@@ -38,6 +39,7 @@ parser.add_argument('--text_file', type=str,
                     help='filename of the text to test')
 # parser.add_argument('--n_experts', type=int, default=10, help='number of experts')
 
+global tokens, lps
 
 args = parser.parse_args()
 
@@ -119,6 +121,9 @@ def gradstat():
 
 def evaluate():
 
+    tokens = []
+    lps = []
+
     #clips decay rates at 1/lamb
     #otherwise scaled decay rates can be greater than 1
     #would cause decay updates to overshoot
@@ -172,7 +177,9 @@ def evaluate():
         log_prob, hidden = model(data, hidden)
         loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), targets)
 
-        print(corpus.dictionary.idx2word[data[0].tolist()[0]], loss.data)
+        tokens.append(corpus.dictionary.idx2word[data[0].tolist()[0]])
+        lps.append(loss.data.item())
+        #print(corpus.dictionary.idx2word[data[0].tolist()[0]], loss.data)
 
         #compute gradient on sequence segment loss
         loss.backward()
@@ -197,6 +204,9 @@ def evaluate():
     #makes very little difference, usually < 0.01 perplexity point
     #total_loss += (1/seq_len0)*torch.log(torch.from_numpy(np.array([ntokens])).type(torch.cuda.FloatTensor))
     #batch+=(1/seq_len0)
+    name = args.text_file.split('/')[1]
+    with open(name + .lps, 'wb') as file:
+        pickle.dump((tokens,  lps), file)
 
     perp = total_loss/batch
     if args.cuda:
