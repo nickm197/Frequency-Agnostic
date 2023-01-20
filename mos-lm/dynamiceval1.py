@@ -165,7 +165,7 @@ def evaluate():
 
         src = torch.LongTensor([indices]).cuda()
 
-        print('src', src, indices)
+        #print('src', src, indices)
 
         hidden = model.init_hidden(i+1)
 
@@ -174,10 +174,10 @@ def evaluate():
         loss = log_prob.view(-1, log_prob.size(2))[-1, input[i+1].item()]
         #loss = nn.functional.nll_loss(log_prob.view(-1, log_prob.size(2)), torch.LongTensor([input[i+1]]).cuda())
 
-        #tokens.append(corpus.dictionary.idx2word[data[0].tolist()[0]])
-        #lps.append(loss.data.item())
+        tokens.append(corpus.dictionary.idx2word[input[i+1].item()])
+        lps.append(loss.data.item())
         #print(log_prob.size())
-        print(corpus.dictionary.idx2word[input[i+1]], loss.data)
+        print(corpus.dictionary.idx2word[input[i+1]].item(), loss.data.item())
 
         indices.append(input[i+1].item())
 
